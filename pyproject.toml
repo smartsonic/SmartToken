@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smarttoken"
+version = "2.0.0"
+description = "AI Smart Router for OpenClaw - Intelligent token cost optimization"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "SmartToken Team", email = "team@smarttoken.dev"}
+]
+keywords = ["ai", "openclaw", "llm", "router", "token-optimization", "cost-saving"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License 2.0",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+    "pydantic>=2.5.0",
+    "cryptography>=42.0.0",
+    "sqlalchemy>=2.0.0",
+    "aiosqlite>=0.19.0",
+    "httpx>=0.26.0",
+    "tiktoken>=0.7.0",
+    "click>=8.1.0",
+    "rich>=13.7.0",
+    "pyyaml>=6.0.0",
+    "tenacity>=8.2.0",
+    "numpy>=1.26.0",
+    "redis>=5.0.0",
+    # Enhanced ML and encryption
+    "scikit-learn>=1.4.0",
+    "argon2-cffi>=23.1.0",
+    # Vector search
+    "faiss-cpu>=1.7.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "black>=24.0.0",
+    "isort>=5.13.0",
+    "mypy>=1.8.0",
+    "ruff>=0.2.0",
+]
+docker = [
+    "docker>=7.0.0",
+]
+
+[project.scripts]
+smarttoken = "smarttoken.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/smarttoken/smarttoken"
+Documentation = "https://docs.smarttoken.dev"
+Repository = "https://github.com/smarttoken/smarttoken"
+Issues = "https://github.com/smarttoken/smarttoken/issues"
+Changelog = "https://github.com/smarttoken/smarttoken/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["smarttoken*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["smarttoken"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+plugins = ["numpy.typing"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"

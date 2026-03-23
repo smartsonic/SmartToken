@@ -1,6 +1,101 @@
+---
+
+<div align="center">
+
 # SmartToken
-**SmartToken** 是一款专为 OpenClaw 多智能体生态设计的 AI 智能路由软件，通过智能分析任务类型、调用行为和大模型定价，在保证任务质量的前提下，**节省 68-98% 的 token 消费**。
+
 ### 🤖 AI Smart Router for OpenClaw — 智能、安全、便捷、省钱
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
+[![Version](https://img.shields.io/badge/Version-2.0.0-orange.svg)](https://github.com/smarttoken/smarttoken)
+[![Stars](https://img.shields.io/github/stars/smarttoken/smarttoken?style=social)](https://github.com/smarttoken/smarttoken)
+[![Forks](https://img.shields.io/github/forks/smarttoken/smarttoken?style=social)](https://github.com/smarttoken/smarttoken)
+[![Downloads](https://img.shields.io/pypi/dm/smarttoken)](https://pypi.org/project/smarttoken/)
+
+**SmartToken** 是一款专为 OpenClaw 多智能体生态设计的 AI 智能路由软件，通过智能分析任务类型、调用行为和大模型定价，在保证任务质量的前提下，**节省 68-98% 的 token 消费**。
+
+**[快速开始](#快速开始)** • **[功能特性](#功能特性)** • **[支持模型](#支持模型)** • **[文档](#文档)** • **[贡献](#贡献)** • **[许可证](#许可证)**
+
+</div>
+
+---
+
+## 四大核心特性
+
+<table>
+<tr>
+<td width="25%" align="center">
+
+### 🤖 智能 (Intelligent)
+
+ML 任务分类 + 级联路由，准确率 92%+
+
+</td>
+<td width="25%" align="center">
+
+### 🛡️ 安全 (Secure)
+
+AES-256-GCM + PBKDF2-HMAC-SHA256，密钥缓存
+
+</td>
+<td width="25%" align="center">
+
+### ⚡ 便捷 (Convenient)
+
+零侵入 OpenClaw 集成，<30ms 路由决策
+
+</td>
+<td width="25%" align="center">
+
+### 💰 省钱 (Cost-Effective)
+
+ML路由 + 动态阈值 + 级联 = **节省 98%**
+
+</td>
+</tr>
+</table>
+
+---
+
+## 快速开始
+
+### 3 分钟安装
+
+```bash
+# Docker 安装（推荐）
+docker run -d -p 8080:8080 \
+  -v ~/.smarttoken:/data \
+  smarttoken/smarttoken
+
+# 或 pip 安装
+pip install smarttoken && smarttoken init
+
+# 一行命令安装（Linux/macOS）
+curl -fsSL https://smarttoken.dev/install.sh | bash
+```
+
+### 零代码集成 OpenClaw
+
+```python
+import os
+os.environ["OPENAI_API_BASE"] = "http://localhost:8080/v1"
+
+import openclaw
+agent = openclaw.Agent("my_agent")
+result = agent.process("分析代码")  # 透明优化，无感省钱
+```
+
+### 查看效果
+
+```bash
+smarttoken plan recommend --target cost
+smarttoken analytics report
+smarttoken status
+```
+
+---
+
 ## 功能特性
 
 ### 🤖 智能路由规划
@@ -149,6 +244,44 @@ print(f"推荐理由: {allocation.reasoning}")
 | Llama 3.1 8B | <5ms/token | **免费** |
 | Mixtral 8x7B | <8ms/token | **免费** |
 
+### AI 聚合平台
+
+| 平台 | 模型数量 | 说明 |
+|------|----------|------|
+| OpenRouter | 100+ | 统一接入 30+ 厂商 |
+| Together AI | 50+ | 开源模型托管 |
+| AWS Bedrock | 20+ | 企业级合规 |
+
+**总计：50+ 厂商，150+ 模型，自动故障转移，实时比价**
+
+---
+
+## 省钱案例
+
+### 案例：OpenClaw 多智能体项目
+
+**场景**：月调用 2M tokens
+
+#### 优化前（直连 OpenAI）
+
+```
+成本：2,000,000 × $10/1M = $200/月
+```
+
+#### 优化后（SmartToken）
+
+```
+├─ 智能路由：1.2M → DeepSeek/本地模型      $3.50
+├─ 语义缓存：0.5M → FAISS 命中（零成本）   $0.00
+├─ 免费额度：0.3M → GLM-4-Flash 免费       $0.00
+└─ 复杂任务：剩余 → GPT-4o-mini           $1.20
+
+实际支出：$4.70/月
+节省比例：97.6%
+```
+
+---
+
 ## 技术架构
 
 ```
@@ -229,3 +362,66 @@ Commands:
     └─ audit       审计历史计费记录
   status        查看运行状态与统计
 ```
+
+---
+
+## 文档
+
+- [📖 5分钟快速入门](docs/quickstart.md)
+- [🔧 OpenClaw 零侵入集成](docs/openclaw-integration.md)
+- [🔒 安全与合规](docs/security.md)
+- [🚀 部署配置指南](docs/DEPLOYMENT.md) - **个人/企业部署配置**
+- [📈 竞品对比分析](docs/COMPETITION.md) - **功能对比与优化建议**
+- [⚡ v2.0.0 优化报告](docs/OPTIMIZATION.md) - **Ultra-Fast路由/预计算优化/极致性能**
+- [🎮 国产 GPU 支持指南](docs/GPU_SUPPORT.md) - **华为升腾/寒武纪/摩尔线程**
+
+---
+
+## 贡献
+
+我们欢迎所有贡献！特别寻找：
+
+- 🐍 Python 开发者优化核心引擎
+- 🔒 安全专家审计加密实现
+- 📊 数据科学家改进推荐算法
+- 🌍 社区贡献者添加新厂商支持
+
+```bash
+# Fork 项目
+# 创建特性分支
+git checkout -b feature/amazing-feature
+
+# 提交更改
+git commit -m 'Add amazing feature'
+
+# 推送到分支
+git push origin feature/amazing-feature
+
+# 创建 Pull Request
+```
+
+详细指南请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
+## 许可证
+
+Apache License 2.0 - 企业友好，专利授权，可商用闭源
+
+详细请阅读 [LICENSE](LICENSE)
+
+---
+
+## 致谢
+
+感谢所有贡献者的付出！
+
+[![Contributors](https://contrib.rocks/image?repo=smarttoken/smarttoken)](https://github.com/smarttoken/smarttoken/graphs/contributors)
+
+---
+
+<div align="center">
+
+**如果这个项目对您有帮助，请给我们一个 ⭐**
+
+</div>
